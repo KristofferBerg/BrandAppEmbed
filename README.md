@@ -10,3 +10,6 @@ Paste this embed code into your HTML.
 
 A fully functional demostration is given in the file:
 index.html
+
+## How to insert from BrandApp into "Your Application"
+Open an existing design. If iframe detected around BrandApp (ie. this embedded example ) you'll see a button in the upper right corner displaying "Insert".
