@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Your Application</title>
+	</head>
+	<body>
+		<h1>Your Application</h1>
+		
+		<h3>Media List</h3>
+		<div id="media-list">
+			<!-- list of added images from BrandApp -->
+		</div>
+		
+		<button onclick="showModal()">Add BrandApp Media</button>
+		
+		<pre id="payload"></pre>
+		
+		<div id="modal-wrapper" onclick="hideModal()">
+			<div class="modal">
+				<iframe 
+					id="brandapp-iframe"
+					style="width: 100%; height: 100%; border: none;">
+				</iframe>
+			</div>
+		</div>
+		
+		<style>
+			html, body {
+				margin: 0;
+				padding: 20px;
+				font-family: sans-serif;
+			}
+			
+			#media-list {
+				background: #eee;
+				width: 100%;
+				min-height: 200px;
+				margin-bottom: 30px;
+			}
+			
+				#media-list img {
+					max-width: 200px;
+					max-height: 200px;
+					margin: 20px;
+				}
+					
+			button {
+				background: #444;
+				color: #fff;
+				border: none;
+				padding: 20px;
+			}
+				
+				button:hover {
+					background: #333;
+				}
+				
+			#modal-wrapper {
+				display: none;
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,.9);
+			}
+			
+				#modal-wrapper .modal {
+					border-radius: 10px;
+					overflow: hidden;
+					position: absolute;
+					top: 100px;
+					right: 100px;
+					bottom: 100px;
+					left: 100px;
+				}
+		</style>
+		
+		<script type="text/javascript">
+			function showModal(){
+				// Open generic modal
+				document.getElementById('modal-wrapper').style.display = 'block';
+				
+				// Set BrandApp iframe source
+				if ( !document.getElementById('brandapp-iframe').src ) {
+					document.getElementById('brandapp-iframe').src = 'https://app.brandapp.io/';
+				}
+			}
+			
+			function hideModal(){
+				// Hide generic modal
+				document.getElementById('modal-wrapper').style.display = 'none';
+			}
+			
+			function handleIframeTask(e) {
+				if (e && e.data) {
+					// Output all payload data into the <pre> tag
+					document.getElementById('payload').innerHTML = JSON.stringify( e.data, null, 4);
+
+					// Append preview image from BrandApp
+					var brandAppImage = document.createElement('img');
+					brandAppImage.setAttribute('src', e.data.media.preview );
+					document.getElementById('media-list').appendChild(brandAppImage);
+					
+					// Hide generic modal
+					hideModal();
+				}
+			};
+			
+			// Listen for window events from BrandApp iframe
+			window.addEventListener('message', this.handleIframeTask);
+		</script>
+	</body>
+</html>
