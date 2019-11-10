@@ -86,7 +86,14 @@
 				
 				// Set BrandApp iframe source
 				if ( !document.getElementById('brandapp-iframe').src ) {
-					document.getElementById('brandapp-iframe').src = 'https://app.brandapp.io/';
+					var params = {
+						btnText: 'Insert Now', // default: 'Insert'
+						btnBackground: '#444444', // default: '#444444'
+						btnColor: '#ffffff', // default: '#ffffff'
+						navigationOpen: false, // false
+					};
+					
+					document.getElementById('brandapp-iframe').src = 'https://app.brandapp.io/?embedParams='+encodeURIComponent(JSON.stringify(params));
 				}
 			}
 			
